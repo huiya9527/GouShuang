@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body>
+    <div class="page">
+        <h2>Login</h2>
+        <form action="#" th:action="@{/whichlog}"  th:object="${loginMessage}" method="post">
+            <dt>Username:</dt>
+            <dd><input type="text" th:field = "*{username}" /></dd>
+            <dt>Password:</dt>
+            <dd><input type="password" th:field ="*{password}" /></dd>
+            <dt>UserType:</dt>
+            <dd>
+                <select th:field="*{userType}">
+                    <option value="customer">customer</option>
+                    <option value="courier">courier</option>
+                    <option value="administrator">administrator</option>
+                </select>
+            </dd>
+            <dd><input type="submit" value="login"/></dd>
+        </form>
+    </div>
+</body>
+</html>
