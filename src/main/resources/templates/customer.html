@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 </head>
 <body>
-hello welcome to customer main page;
+<p>Welcome <td th:text="${user.name}"/></p>
+
+<form action="#" th:action="@{/whichlog}"  th:object="${loginMessage}" method="post">
+    <table border="1">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>remaining</th>
+            <th>price</th>
+            <th>classify</th>
+            <th>info</th>
+        </tr>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.num}"></td>
+            <td th:text="${book.price}"></td>
+            <td th:text="${book.classify}"></td>
+            <td th:text="${book.info}"></td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>

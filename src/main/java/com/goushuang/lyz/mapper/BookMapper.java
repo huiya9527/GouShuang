@@ -17,4 +17,7 @@ public interface BookMapper {
     @Select("select id, name, num, price, classify, info from books where classify = #{classify}")
     List<Book> findByClassify(@Param("classify")String classify);
 
+    @Select("select id, name, num, price, classify, info from books")
+    List<Book> findAllBooks();
+
 }
