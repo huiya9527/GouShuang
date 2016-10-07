@@ -3,30 +3,80 @@
     <meta content="text/html;charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        .div-inline{display:inline-block}
+        .div-width{width:1000px}
+        .input-width{width:50px}
+    </style>
 </head>
 <body>
 <p>Welcome <td th:text="${user.name}"/></p>
 
-<table border="1">
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>number</th>
-        <th>price</th>
-        <th>classify</th>
-        <th>info</th>
-    </tr>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.id}"></td>
-        <td th:text="${book.name}"></td>
-        <td th:text="${book.num}"></td>
-        <td th:text="${book.price}"></td>
-        <td th:text="${book.classify}"></td>
-        <td th:text="${book.info}"></td>
-    </tr>
-</table>
-
-
+<form th:action="@{/order}" method="post" >
+    <input th:value="${user.name}" name="username" readonly="readonly"/>
+    <br/>
+    <div th:each="book:${books}" class="div-width">
+        <div class="div-inline" >
+            <div>
+                <span>id</span>
+            </div>
+            <div>
+                <input th:value="${book.id}" readonly="readonly" class="input-width"/>
+            </div>
+        </div>
+        <div class="div-inline" >
+            <div>
+                <span>name</span>
+            </div>
+            <div>
+                <input name="bookname" th:value="${book.name}" readonly="readonly" class="input-width"/>
+            </div>
+        </div>
+        <div class="div-inline" >
+            <div>
+                <span>remaining</span>
+            </div>
+            <div>
+                <input th:value="${book.num}" readonly="readonly" class="input-width"/>
+            </div>
+        </div>
+        <div class="div-inline">
+            <div>
+                <span>price</span>
+            </div>
+            <div>
+                <input name="price" th:value="${book.price}" readonly="readonly" class="input-width"/>
+            </div>
+        </div>
+        <div class="div-inline" >
+            <div>
+                <span>classify</span>
+            </div>
+            <div>
+                <input th:value="${book.classify}" readonly="readonly" class="input-width"/>
+            </div>
+        </div>
+        <div class="div-inline" >
+            <div>
+                <span>info</span>
+            </div>
+            <div>
+                <input th:value="${book.info}" readonly="readonly" class="input-width"/>
+            </div>
+        </div>
+        <div class="div-inline">
+            <div>
+                <span>count</span>
+            </div>
+            <div>
+                <input name="count" type="number" min="0" th:max="${book.num}" th:value="0"/>
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="order"/>
+    </div>
+</form>
 
 </body>
 </html>

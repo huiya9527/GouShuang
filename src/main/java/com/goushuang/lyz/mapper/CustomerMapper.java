@@ -12,5 +12,4 @@ import org.springframework.stereotype.Component;
 public interface CustomerMapper {
     @Select("select name, password, reserve from customers where name = #{name}")
     Customer findByName(@Param("name")String name);
-
 }

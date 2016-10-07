@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * Created by lyz on 2016/9/17.
- */
 @Mapper
 @Component
 public interface BookMapper {
