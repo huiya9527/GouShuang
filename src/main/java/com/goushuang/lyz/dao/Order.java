@@ -12,7 +12,12 @@ public class Order {
     private String info = "";
 
     public void addItem(String name, int count, float price){
-        info += "["+name + ", " + count + ", " + price + "]";
+        if(info.length() == 0) {
+            info +=  (name + "," + count + "," + price);
+        } else {
+            info += (" "+name + "," + count + "," + price);
+        }
+
         this.totalPrice += (count * price);
     }
 

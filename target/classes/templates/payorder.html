@@ -3,9 +3,33 @@
     <meta content="text/html;charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="webjars/jquery/2.1.4/jquery.js"></script>
 </head>
 <body>
-<p>Welcome <td th:text="${order.userName}"/></p>
-<p>books infomation: <td th:text="${order.totalPrice}"/></p>
+
+<form name="payForm" th:action="@{/paying}" th:object="${order}" method="post">
+    <p>Welcome <input type="text" th:field="*{userName}" readonly="readonly"/></p>
+    <p>Your balance: <input name="reserve" type="text" th:field="${customer.reserve}" readonly="readonly"/></p>
+    <p>Your order details are as follows, please confirm whether pay for it.</p>
+    <p>books infomation: <input type="text" th:field="*{info}" readonly="readonly"/></p>
+    <p>total price: <input name="totalPrice" type="text" th:field="*{totalPrice}" readonly="readonly"/> </p>
+    <input type="button" value="pay for order" onclick="checkValue()"/>
+</form>
+<script type="text/javascript" th:inline="javascript">
+    function checkValue(){
+        var totalPrice = parseFloat($("#totalPrice").val());
+        var reserve = parseFloat($("#reserve").val());
+        console.log(totalPrice);
+        console.log(reserve);
+        /*<![CDATA[*/
+        if(totalPrice <= reserve){
+           document.payForm.submit();
+        } else {
+            alert("Your money is not enough!")
+        }
+        /*]]>*/
+        return false;
+    }
+</script>
 </body>
 </html>
