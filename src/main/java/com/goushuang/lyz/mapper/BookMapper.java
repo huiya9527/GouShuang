@@ -21,6 +21,8 @@ public interface BookMapper {
     @Select("select id, name, num, price, classify, info from books where name = #{name}")
     Book findBookByName(@Param("name")String name);
 
+    @Update("update books set num = #{num} where name = #{name}")
+    void updateBookNumByName(@Param("num")int num, @Param("name")String name);
 
 
 }

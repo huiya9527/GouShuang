@@ -8,9 +8,10 @@
 <body>
 
 <form name="payForm" th:action="@{/paying}" th:object="${order}" method="post">
-    <p>Welcome <input type="text" th:field="*{userName}" readonly="readonly"/></p>
+    <p>Welcome <input type="text" th:field="*{name}" readonly="readonly"/></p>
     <p>Your balance: <input name="reserve" type="text" th:field="${customer.reserve}" readonly="readonly"/></p>
     <p>Your order details are as follows, please confirm whether pay for it.</p>
+    <p>order id :  <input type="text" th:field="*{id}" readonly="readonly"/></p>
     <p>books infomation: <input type="text" th:field="*{info}" readonly="readonly"/></p>
     <p>total price: <input name="totalPrice" type="text" th:field="*{totalPrice}" readonly="readonly"/> </p>
     <input type="button" value="pay for order" onclick="checkValue()"/>

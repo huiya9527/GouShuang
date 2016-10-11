@@ -3,10 +3,35 @@
     <meta content="text/html;charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="webjars/jquery/2.1.4/jquery.js"></script>
 </head>
 <body>
 <div>
-    succeed!
+    <form name="afterpay" th:action="@{/afterpay}" th:object="${order}" method="post">
+        <p>hello <input type="text" th:field="*{name}" readonly="readonly"/>, pay success!</p>
+        <p>order id :  <input type="text" th:field="*{id}" readonly="readonly"/></p>
+        <p>books infomation: <input type="text" th:field="*{info}" readonly="readonly"/></p>
+        <p>total price: <input name="totalPrice" type="text" th:field="*{totalPrice}" readonly="readonly"/> </p>
+        <p>We will not ask you for personal information, please do not disclose order information to any others, you will
+            return to main page after seconds</p>
+    </form>
+    <span id="jumpTo">5</span>
+    <script type="text/javascript" th:inline="javascript">
+        function countDown(secs){
+            var jumpTo = document.getElementById("jumpTo");
+            jumpTo.innerText = secs;
+            console.log(secs);
+            /*<![CDATA[*/
+            if(--secs>0){
+                setTimeout("countDown("+secs+")",1000);
+            }
+            else{
+                document.afterpay.submit();
+            }
+            /*]]>*/
+        }
+        countDown(5);
+    </script>
 </div>
 </body>
 </html>

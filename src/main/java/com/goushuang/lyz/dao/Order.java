@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Order {
 
-    private String userName;
+    private int id;
+    private String name;
     private float totalPrice = 0;
     private String state;
     private String time;
@@ -21,12 +22,36 @@ public class Order {
         this.totalPrice += (count * price);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public float getTotalPrice() {
         return totalPrice;
     }
 
     public void setTotalPrice(float totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getTime() {
@@ -43,22 +68,6 @@ public class Order {
 
     public void setInfo(String info) {
         this.info = info;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 }
 

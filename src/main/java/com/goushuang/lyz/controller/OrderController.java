@@ -32,10 +32,10 @@ public class OrderController {
                 order.addItem(bookname[i], count[i], price[i]);
             }
         }
-        order.setUserName(username);
+        order.setName(username);
         order.setTime(DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG,   Locale.CHINESE).format(new java.util.Date()));
         order.setState("not pay");
-        orderMappper.insertOrder(order.getUserName(), order.getTotalPrice(), order.getState(), order.getTime(), order.getInfo());
+        orderMappper.insertOrder(order);
         Customer customer = customerMapper.findByName(username);
         model.addAttribute("order", order);
         model.addAttribute("customer",customer);

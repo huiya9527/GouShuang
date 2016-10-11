@@ -4,6 +4,7 @@ import com.goushuang.lyz.dao.Customer;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
 
@@ -12,4 +13,7 @@ import org.springframework.stereotype.Component;
 public interface CustomerMapper {
     @Select("select name, password, reserve from customers where name = #{name}")
     Customer findByName(@Param("name")String name);
+
+    @Update("update customers set reserve = #{reverse} where name = #{name}")
+    void updateReverseByName(@Param("reverse")float reverse, @Param("name")String name);
 }
