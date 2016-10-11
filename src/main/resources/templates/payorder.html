@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form name="payForm" th:action="@{/paying}" th:object="${order}" method="post">
+<form name="payForm" th:action="@{/paying}" th:object="${systemOrder}" method="post">
     <p>Welcome <input type="text" th:field="*{name}" readonly="readonly"/></p>
     <p>Your balance: <input name="reserve" type="text" th:field="${customer.reserve}" readonly="readonly"/></p>
     <p>Your order details are as follows, please confirm whether pay for it.</p>

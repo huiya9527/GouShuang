@@ -81,13 +81,16 @@
 </div>
 <div>
     <p>all orders</p>
-
-
+    <div th:each="systemOrder:${systemOrderList}" class="div-width">
+        <div class="div-inline"> <input th:value="${systemOrder.id}" readonly="readonly" class="input-width"/></div>
+        <div class="div-inline"> <input th:value="${systemOrder.courier}" readonly="readonly" class="input-width"/></div>
+        <div class="div-inline"> <input th:value="${systemOrder.totalPrice}" readonly="readonly" class="input-width"/></div>
+        <div class="div-inline"> <input th:value="${systemOrder.state}" readonly="readonly" class="input-width"/></div>
+        <div class="div-inline"> <input th:value="${systemOrder.time}" readonly="readonly" class="input-width"/></div>
+        <div class="div-inline"> <input th:value="${systemOrder.info}" readonly="readonly" class="input-width"/></div>
+    </div>
 </div>
 
-<div>
-    <p>order pay</p>
-</div>
 <script type="text/javascript" th:inline="javascript">
     function checkValue(){
         var objs = $("input[name='count']");

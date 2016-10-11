@@ -3,7 +3,7 @@ package com.goushuang.lyz.controller;
 import com.goushuang.lyz.dao.Customer;
 import com.goushuang.lyz.dao.SystemOrder;
 import com.goushuang.lyz.mapper.CustomerMapper;
-import com.goushuang.lyz.mapper.OrderMappper;
+import com.goushuang.lyz.mapper.SystemOrderMappper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import java.util.Locale;
 public class OrderController {
 
     @Autowired
-    private OrderMappper orderMappper;
+    private SystemOrderMappper systemOrderMappper;
 
     @Autowired
     private CustomerMapper customerMapper;
@@ -35,9 +35,9 @@ public class OrderController {
         systemOrder.setName(username);
         systemOrder.setTime(DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG,   Locale.CHINESE).format(new java.util.Date()));
         systemOrder.setState("not pay");
-        orderMappper.insertOrder(systemOrder);
+        systemOrderMappper.insertOrder(systemOrder);
         Customer customer = customerMapper.findByName(username);
-        model.addAttribute("order", systemOrder);
+        model.addAttribute("systemOrder", systemOrder);
         model.addAttribute("customer",customer);
         return "payorder";
     }

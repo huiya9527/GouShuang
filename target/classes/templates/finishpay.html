@@ -7,7 +7,7 @@
 </head>
 <body>
 <div>
-    <form name="afterpay" th:action="@{/afterpay}" th:object="${order}" method="post">
+    <form name="afterpay" th:action="@{/afterpay}" th:object="${systemOrder}" method="post">
         <p>hello <input type="text" th:field="*{name}" readonly="readonly"/>, pay success!</p>
         <p>order id :  <input type="text" th:field="*{id}" readonly="readonly"/></p>
         <p>books infomation: <input type="text" th:field="*{info}" readonly="readonly"/></p>

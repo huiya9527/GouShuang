@@ -2,9 +2,11 @@ package com.goushuang.lyz.services;
 
 import com.goushuang.lyz.dao.Book;
 import com.goushuang.lyz.dao.Customer;
+import com.goushuang.lyz.dao.SystemOrder;
 import com.goushuang.lyz.error.LoginError;
 import com.goushuang.lyz.mapper.BookMapper;
 import com.goushuang.lyz.mapper.CustomerMapper;
+import com.goushuang.lyz.mapper.SystemOrderMappper;
 import com.goushuang.lyz.tools.EncodeBySHA;
 import com.goushuang.lyz.viewObject.LoginMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class LoginService {
     @Autowired
     private BookMapper bookMapper;
 
+    @Autowired
+    private SystemOrderMappper systemOrderMappper;
+
     public String loginCheck(LoginMessage loginMessage, Model model){
         if(loginMessage.getUserType().equals("customer")) {
             Customer customer = customerMapper.findByName(loginMessage.getUsername());
@@ -36,8 +41,10 @@ public class LoginService {
                 return "loginerror";
             }
             List<Book> books = bookMapper.findAllBooks();
+            List<SystemOrder> systemOrderList = systemOrderMappper.selectOrderByName(loginMessage.getUsername());
             model.addAttribute("user", customer);
             model.addAttribute("books", books);
+            model.addAttribute("systemOrderList", systemOrderList);
             return "customer";
         } else if(loginMessage.getUserType().equals("courier")) {
             return "courier";

@@ -5,7 +5,7 @@ import com.goushuang.lyz.dao.Customer;
 import com.goushuang.lyz.dao.SystemOrder;
 import com.goushuang.lyz.mapper.BookMapper;
 import com.goushuang.lyz.mapper.CustomerMapper;
-import com.goushuang.lyz.mapper.OrderMappper;
+import com.goushuang.lyz.mapper.SystemOrderMappper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,7 @@ public class PayOrderController {
     private BookMapper bookMapper;
 
     @Autowired
-    private OrderMappper orderMappper;
+    private SystemOrderMappper systemOrderMappper;
 
     @RequestMapping(value="/paying", method= RequestMethod.POST)
     public String payOrder(@ModelAttribute SystemOrder systemOrder, Model model){
@@ -53,7 +53,7 @@ public class PayOrderController {
             bookMapper.updateBookNumByName(book.getNum()-count, name);
         }
         //查询订单并修改状态
-        orderMappper.updateStateById("paid", systemOrder.getId());
+        systemOrderMappper.updateStateById("paid", systemOrder.getId());
         //扣款
         customerMapper.updateReverseByName(customer.getReserve()- systemOrder.getTotalPrice(), customer.getName());
         return "finishpay";
