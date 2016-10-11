@@ -12,6 +12,7 @@ import java.util.List;
 
 @Component
 public class AfterPayService {
+
     @Autowired
     private CustomerMapper customerMapper;
 

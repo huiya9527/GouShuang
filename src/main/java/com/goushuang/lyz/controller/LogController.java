@@ -1,6 +1,6 @@
 package com.goushuang.lyz.controller;
 
-import com.goushuang.lyz.dao.Order;
+import com.goushuang.lyz.dao.SystemOrder;
 import com.goushuang.lyz.services.AfterPayService;
 import com.goushuang.lyz.services.LoginService;
 import com.goushuang.lyz.viewObject.LoginMessage;
@@ -25,7 +25,7 @@ public class LogController {
     }
 
     @RequestMapping(value ="/afterpay", method = RequestMethod.POST)
-    public String afterpay(@ModelAttribute Order order, Model model){
-        return afterPayService.afterPay(model, order.getName());
+    public String afterpay(@ModelAttribute SystemOrder systemOrder, Model model){
+        return afterPayService.afterPay(model, systemOrder.getName());
     }
 }

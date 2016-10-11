@@ -1,6 +1,6 @@
 package com.goushuang.lyz.mapper;
 
-import com.goushuang.lyz.dao.Order;
+import com.goushuang.lyz.dao.SystemOrder;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 @Mapper
 public interface OrderMappper {
 
-    @Insert("insert into customerorder (name, totalPrice, state, time, info) values (#{name}, #{totalPrice}, #{state}, #{time}, #{info}) ")
+    @Insert("insert into order (name, totalPrice, state, time, info) values (#{name}, #{totalPrice}, #{state}, #{time}, #{info}) ")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    void insertOrder(Order order);
+    void insertOrder(SystemOrder systemOrder);
 
-    @Update("update customerorder set state = #{state} where id = #{id}")
+    @Update("update order set state = #{state} where id = #{id}")
     void updateStateById(@Param("state")String state, @Param("id")int id);
 
 }

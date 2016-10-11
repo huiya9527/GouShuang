@@ -3,10 +3,11 @@ package com.goushuang.lyz.dao;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Order {
+public class SystemOrder {
 
     private int id;
     private String name;
+    private String courier;
     private float totalPrice = 0;
     private String state;
     private String time;
@@ -36,6 +37,14 @@ public class Order {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCourier() {
+        return courier;
+    }
+
+    public void setCourier(String courier) {
+        this.courier = courier;
     }
 
     public float getTotalPrice() {

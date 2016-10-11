@@ -13,9 +13,8 @@
         <p>books infomation: <input type="text" th:field="*{info}" readonly="readonly"/></p>
         <p>total price: <input name="totalPrice" type="text" th:field="*{totalPrice}" readonly="readonly"/> </p>
         <p>We will not ask you for personal information, please do not disclose order information to any others, you will
-            return to main page after seconds</p>
+            return to main page after <span id="jumpTo">5</span> seconds</p>
     </form>
-    <span id="jumpTo">5</span>
     <script type="text/javascript" th:inline="javascript">
         function countDown(secs){
             var jumpTo = document.getElementById("jumpTo");

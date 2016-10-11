@@ -8,11 +8,12 @@
         .div-width{width:1000px}
         .input-width{width:50px}
     </style>
+    <script src="webjars/jquery/2.1.4/jquery.js"></script>
 </head>
 <body>
 <p>Welcome <td th:text="${user.name}"/></p>
 
-<form th:action="@{/order}" method="post" >
+<form name="order" th:action="@{/order}" method="post" >
     <input th:value="${user.name}" name="username" readonly="readonly"/>
     <br/>
     <div th:each="book:${books}" class="div-width">
@@ -74,9 +75,28 @@
         </div>
     </div>
     <div>
-        <input type="submit" value="order"/>
+        <input type="button" value="order" onclick="checkValue()" />
     </div>
 </form>
-
+<script type="text/javascript" th:inline="javascript">
+    function checkValue(){
+        var objs = $("input[name='count']");
+        var length = objs.length;
+        var jump = false;
+        /*<![CDATA[*/
+        for(var i = 0; i < length; i++) {
+            if(objs[i].value > 0) {
+                jump = true;
+            }
+        }
+        if(jump) {
+            document.order.submit();
+        } else {
+            alert("Your order is empty");
+        }
+        /*]]>*/
+        return false;
+    }
+</script>
 </body>
 </html>

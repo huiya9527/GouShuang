@@ -8,75 +8,105 @@
         .div-width{width:1000px}
         .input-width{width:50px}
     </style>
+    <script src="webjars/jquery/2.1.4/jquery.js"></script>
 </head>
 <body>
 <p>Welcome <td th:text="${user.name}"/></p>
+<div>
+    <form name="order" th:action="@{/order}" method="post" >
+        <input th:value="${user.name}" name="username" readonly="readonly"/>
+        <br/>
+        <div th:each="book:${books}" class="div-width">
+            <div class="div-inline" >
+                <div>
+                    <span>id</span>
+                </div>
+                <div>
+                    <input th:value="${book.id}" readonly="readonly" class="input-width"/>
+                </div>
+            </div>
+            <div class="div-inline" >
+                <div>
+                    <span>name</span>
+                </div>
+                <div>
+                    <input name="bookname" th:value="${book.name}" readonly="readonly" class="input-width"/>
+                </div>
+            </div>
+            <div class="div-inline" >
+                <div>
+                    <span>remaining</span>
+                </div>
+                <div>
+                    <input th:value="${book.num}" readonly="readonly" class="input-width"/>
+                </div>
+            </div>
+            <div class="div-inline">
+                <div>
+                    <span>price</span>
+                </div>
+                <div>
+                    <input name="price" th:value="${book.price}" readonly="readonly" class="input-width"/>
+                </div>
+            </div>
+            <div class="div-inline" >
+                <div>
+                    <span>classify</span>
+                </div>
+                <div>
+                    <input th:value="${book.classify}" readonly="readonly" class="input-width"/>
+                </div>
+            </div>
+            <div class="div-inline" >
+                <div>
+                    <span>info</span>
+                </div>
+                <div>
+                    <input th:value="${book.info}" readonly="readonly" class="input-width"/>
+                </div>
+            </div>
+            <div class="div-inline">
+                <div>
+                    <span>count</span>
+                </div>
+                <div>
+                    <input name="count" type="number" min="0" th:max="${book.num}" th:value="0"/>
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="button" value="order" onclick="checkValue()" />
+        </div>
+    </form>
+</div>
+<div>
+    <p>all orders</p>
 
-<form th:action="@{/order}" method="post" >
-    <input th:value="${user.name}" name="username" readonly="readonly"/>
-    <br/>
-    <div th:each="book:${books}" class="div-width">
-        <div class="div-inline" >
-            <div>
-                <span>id</span>
-            </div>
-            <div>
-                <input th:value="${book.id}" readonly="readonly" class="input-width"/>
-            </div>
-        </div>
-        <div class="div-inline" >
-            <div>
-                <span>name</span>
-            </div>
-            <div>
-                <input name="bookname" th:value="${book.name}" readonly="readonly" class="input-width"/>
-            </div>
-        </div>
-        <div class="div-inline" >
-            <div>
-                <span>remaining</span>
-            </div>
-            <div>
-                <input th:value="${book.num}" readonly="readonly" class="input-width"/>
-            </div>
-        </div>
-        <div class="div-inline">
-            <div>
-                <span>price</span>
-            </div>
-            <div>
-                <input name="price" th:value="${book.price}" readonly="readonly" class="input-width"/>
-            </div>
-        </div>
-        <div class="div-inline" >
-            <div>
-                <span>classify</span>
-            </div>
-            <div>
-                <input th:value="${book.classify}" readonly="readonly" class="input-width"/>
-            </div>
-        </div>
-        <div class="div-inline" >
-            <div>
-                <span>info</span>
-            </div>
-            <div>
-                <input th:value="${book.info}" readonly="readonly" class="input-width"/>
-            </div>
-        </div>
-        <div class="div-inline">
-            <div>
-                <span>count</span>
-            </div>
-            <div>
-                <input name="count" type="number" min="0" th:max="${book.num}" th:value="0"/>
-            </div>
-        </div>
-    </div>
-    <div>
-        <input type="submit" value="order"/>
-    </div>
-</form>
 
+</div>
+
+<div>
+    <p>order pay</p>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    function checkValue(){
+        var objs = $("input[name='count']");
+        var length = objs.length;
+        var jump = false;
+        /*<![CDATA[*/
+        for(var i = 0; i < length; i++) {
+            if(objs[i].value > 0) {
+                jump = true;
+            }
+        }
+        if(jump) {
+            document.order.submit();
+        } else {
+            alert("Your order is empty");
+        }
+        /*]]>*/
+        return false;
+    }
+</script>
 </body>
 </html>

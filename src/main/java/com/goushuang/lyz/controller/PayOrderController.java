@@ -2,11 +2,10 @@ package com.goushuang.lyz.controller;
 
 import com.goushuang.lyz.dao.Book;
 import com.goushuang.lyz.dao.Customer;
-import com.goushuang.lyz.dao.Order;
+import com.goushuang.lyz.dao.SystemOrder;
 import com.goushuang.lyz.mapper.BookMapper;
 import com.goushuang.lyz.mapper.CustomerMapper;
 import com.goushuang.lyz.mapper.OrderMappper;
-import org.apache.catalina.util.CustomObjectInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +25,11 @@ public class PayOrderController {
     private OrderMappper orderMappper;
 
     @RequestMapping(value="/paying", method= RequestMethod.POST)
-    public String payOrder(@ModelAttribute Order order, Model model){
-        String info = order.getInfo();
-        Customer customer = customerMapper.findByName(order.getName());
+    public String payOrder(@ModelAttribute SystemOrder systemOrder, Model model){
+        String info = systemOrder.getInfo();
+        Customer customer = customerMapper.findByName(systemOrder.getName());
         //判断用于余额是否充足
-        if(order.getTotalPrice() > customer.getReserve()) {
+        if(systemOrder.getTotalPrice() > customer.getReserve()) {
             model.addAttribute("errorMessage", "not enough money!");
             return "payError";
         }
@@ -54,8 +53,9 @@ public class PayOrderController {
             bookMapper.updateBookNumByName(book.getNum()-count, name);
         }
         //查询订单并修改状态
-        orderMappper.updateStateById("paid",order.getId());
-
+        orderMappper.updateStateById("paid", systemOrder.getId());
+        //扣款
+        customerMapper.updateReverseByName(customer.getReserve()- systemOrder.getTotalPrice(), customer.getName());
         return "finishpay";
     }
 }
