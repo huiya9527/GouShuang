@@ -82,12 +82,15 @@
 <div>
     <p>all orders</p>
     <div th:each="systemOrder:${systemOrderList}" class="div-width">
-        <div class="div-inline"> <input th:value="${systemOrder.id}" readonly="readonly" class="input-width"/></div>
-        <div class="div-inline"> <input th:value="${systemOrder.courier}" readonly="readonly" class="input-width"/></div>
-        <div class="div-inline"> <input th:value="${systemOrder.totalPrice}" readonly="readonly" class="input-width"/></div>
-        <div class="div-inline"> <input th:value="${systemOrder.state}" readonly="readonly" class="input-width"/></div>
-        <div class="div-inline"> <input th:value="${systemOrder.time}" readonly="readonly" class="input-width"/></div>
-        <div class="div-inline"> <input th:value="${systemOrder.info}" readonly="readonly" class="input-width"/></div>
+        <form th:action="@{/existorder}">
+            <div class="div-inline"> <input th:value="${systemOrder.id}" readonly="readonly" class="input-width"/></div>
+            <div class="div-inline"> <input th:value="${systemOrder.courier}" readonly="readonly" class="input-width"/></div>
+            <div class="div-inline"> <input th:value="${systemOrder.totalPrice}" readonly="readonly" class="input-width"/></div>
+            <div class="div-inline"> <input th:value="${systemOrder.state}" readonly="readonly" class="input-width"/></div>
+            <div class="div-inline"> <input th:value="${systemOrder.time}" readonly="readonly" class="input-width"/></div>
+            <div class="div-inline"> <input th:value="${systemOrder.info}" readonly="readonly" class="input-width"/></div>
+            <div class="div-line"><input type="button" value="pay" class="input-width"/></div>
+        </form>
     </div>
 </div>
 

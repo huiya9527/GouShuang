@@ -19,6 +19,12 @@ public class LogController {
     @Autowired
     private AfterPayService afterPayService;
 
+    @RequestMapping("/")
+    public String index(Model model){
+        model.addAttribute("loginMessage", new LoginMessage());
+        return "login";
+    }
+
     @RequestMapping(value ="/whichlog", method = RequestMethod.POST)
     public String log(@ModelAttribute LoginMessage loginMessage, Model model){
         return loginService.loginCheck(loginMessage, model);
