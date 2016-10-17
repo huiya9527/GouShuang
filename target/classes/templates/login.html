@@ -2,22 +2,20 @@
 <head>
     <meta content="text/html;charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
 </head>
 <body>
-    <div class="page">
-        <h1>“购爽”——最贴心的购书网站</h1>
+    <div class="page-container">
         <h2>请登录：</h2>
         <form th:action="@{/whichlog}"  th:object="${loginMessage}" method="post">
-            <dt>用户名:</dt>
-            <dd><input type="text" th:field = "*{username}" /></dd>
-            <dt>密码:</dt>
-            <dd><input type="password" th:field ="*{password}" /></dd>
+            <input type="text"  th:field = "*{username}" class="username" placeholder="请输入您的用户名！"/>
+            <input type="password"   th:field ="*{password}" class="password" placeholder="请输入您的用户密码！"/>
             <dt>身份:</dt>
             <dd>
                 <select th:field="*{userType}">
-                    <option value="customer">customer</option>
-                    <option value="courier">courier</option>
-                    <option value="administrator">administrator</option>
+                    <option value="customer">用户</option>
+                    <option value="courier">快递员</option>
+                    <option value="administrator">管理员</option>
                 </select>
             </dd>
             <dd><input type="submit" value="登录"/></dd>
