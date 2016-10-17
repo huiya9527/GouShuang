@@ -5,13 +5,14 @@
 </head>
 <body>
     <div class="page">
-        <h2>Login</h2>
+        <h1>“购爽”——最贴心的购书网站</h1>
+        <h2>请登录：</h2>
         <form th:action="@{/whichlog}"  th:object="${loginMessage}" method="post">
-            <dt>Username:</dt>
+            <dt>用户名:</dt>
             <dd><input type="text" th:field = "*{username}" /></dd>
-            <dt>Password:</dt>
+            <dt>密码:</dt>
             <dd><input type="password" th:field ="*{password}" /></dd>
-            <dt>UserType:</dt>
+            <dt>身份:</dt>
             <dd>
                 <select th:field="*{userType}">
                     <option value="customer">customer</option>
@@ -19,7 +20,7 @@
                     <option value="administrator">administrator</option>
                 </select>
             </dd>
-            <dd><input type="submit" value="login"/></dd>
+            <dd><input type="submit" value="登录"/></dd>
         </form>
     </div>
 </body>
