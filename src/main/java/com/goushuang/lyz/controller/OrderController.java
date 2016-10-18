@@ -42,7 +42,7 @@ public class OrderController {
                 systemOrder.addItem(bookname[i], count[i], price[i]);
             }
         }
-        systemOrder.setName(username);
+        systemOrder.setCustomer(username);
         systemOrder.setTime(DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG,   Locale.CHINESE).format(new java.util.Date()));
         systemOrder.setState("not pay");
         systemOrderMappper.insertOrder(systemOrder);
@@ -59,7 +59,7 @@ public class OrderController {
     @RequestMapping(value="/paying", method= RequestMethod.POST)
     public String payOrder(@ModelAttribute SystemOrder systemOrder, Model model){
         String info = systemOrder.getInfo();
-        Customer customer = customerMapper.findByName(systemOrder.getName());
+        Customer customer = customerMapper.findByName(systemOrder.getCustomer());
         //判断用于余额是否充足
         if(systemOrder.getTotalPrice() > customer.getReserve()) {
             model.addAttribute("errorMessage", "not enough money!");

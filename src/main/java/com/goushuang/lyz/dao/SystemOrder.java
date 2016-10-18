@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class SystemOrder {
 
     private int id;
-    private String name;
+    private String customer;
     private String courier;
     private float totalPrice = 0;
     private String state;
@@ -31,12 +31,12 @@ public class SystemOrder {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCustomer() {
+        return customer;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
     public String getCourier() {

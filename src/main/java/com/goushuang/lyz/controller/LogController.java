@@ -32,6 +32,6 @@ public class LogController {
 
     @RequestMapping(value ="/afterpay", method = RequestMethod.POST)
     public String afterpay(@ModelAttribute SystemOrder systemOrder, Model model){
-        return afterPayService.afterPay(model, systemOrder.getName());
+        return afterPayService.afterPay(model, systemOrder.getCustomer());
     }
 }

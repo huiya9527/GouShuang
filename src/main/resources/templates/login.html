@@ -10,15 +10,15 @@
         <form th:action="@{/whichlog}"  th:object="${loginMessage}" method="post">
             <input type="text"  th:field = "*{username}" class="username" placeholder="请输入您的用户名！"/>
             <input type="password"   th:field ="*{password}" class="password" placeholder="请输入您的用户密码！"/>
-            <dt>身份:</dt>
-            <dd>
+            <div>
+                <span >请选择身份：</span>
                 <select th:field="*{userType}">
-                    <option value="customer">用户</option>
+                    <option value="customer" selected="selected">用户</option>
                     <option value="courier">快递员</option>
                     <option value="administrator">管理员</option>
                 </select>
-            </dd>
-            <dd><input type="submit" value="登录"/></dd>
+            </div>
+            <button type="submit" value="登录">登录</button>
         </form>
     </div>
 </body>

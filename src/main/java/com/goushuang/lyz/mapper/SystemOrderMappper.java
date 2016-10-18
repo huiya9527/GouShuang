@@ -10,13 +10,13 @@ import java.util.List;
 @Mapper
 public interface SystemOrderMappper {
 
-    @Insert("insert into systemorder (name, totalPrice, state, time, info) values (#{name}, #{totalPrice}, #{state}, #{time}, #{info}) ")
+    @Insert("insert into systemorder (customer, totalPrice, state, time, info) values (#{customer}, #{totalPrice}, #{state}, #{time}, #{info}) ")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     void insertOrder(SystemOrder systemOrder);
 
     @Update("update systemorder set state = #{state} where id = #{id}")
     void updateStateById(@Param("state")String state, @Param("id")int id);
 
-    @Select("select id, courier, totalPrice, state, time, info from systemorder where name = #{name}")
-    List<SystemOrder> selectOrderByName(@Param("name")String name);
+    @Select("select id, courier, totalPrice, state, time, info from systemorder where customer = #{customer}")
+    List<SystemOrder> selectOrderByName(@Param("customer")String customer);
 }
