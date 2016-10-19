@@ -27,7 +27,7 @@ public class AfterPayService {
     public String afterPay(Model model, String username){
         List<Book> books = bookMapper.findAllBooks();
         Customer customer = customerMapper.findByName(username);
-        List<SystemOrder> systemOrderList = systemOrderMappper.selectOrderByName(username);
+        List<SystemOrder> systemOrderList = systemOrderMappper.selectOrderByCustomer(username);
         model.addAttribute("user", customer);
         model.addAttribute("books", books);
         model.addAttribute("systemOrderList", systemOrderList);

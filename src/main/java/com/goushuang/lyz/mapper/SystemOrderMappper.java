@@ -17,6 +17,12 @@ public interface SystemOrderMappper {
     @Update("update systemorder set state = #{state} where id = #{id}")
     void updateStateById(@Param("state")String state, @Param("id")int id);
 
-    @Select("select id, courier, totalPrice, state, time, info from systemorder where customer = #{customer}")
-    List<SystemOrder> selectOrderByName(@Param("customer")String customer);
+    @Select("select id, customer, courier, totalPrice, state, time, info from systemorder where customer = #{customer}")
+    List<SystemOrder> selectOrderByCustomer(@Param("customer")String customer);
+
+    @Select("select id, customer, courier, totalPrice, state, time, info from systemorder where courier = #{courier}")
+    List<SystemOrder> selectOrderByCourier(@Param("courier")String courier);
+
+    @Select("select id, customer, courier, totalPrice, state, time, info from systemorder where courier is null")
+    List<SystemOrder> selectOrderCourierIsNull(@Param("courier")String courier);
 }
