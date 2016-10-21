@@ -11,10 +11,10 @@
     <script src="webjars/jquery/2.1.4/jquery.js"></script>
 </head>
 <body>
-<p>Welcome <td th:text="${user.name}"/></p>
+<p>Welcome <span th:text="${user.name}"/></p>
 <div>
     <form name="order" th:action="@{/order}" method="post" >
-        <input th:value="${user.name}" name="username" readonly="readonly"/>
+        <input type="hidden" th:value="${user.name}" name="username" readonly="readonly" />
         <br/>
         <div th:each="book:${books}" class="div-width">
             <div class="div-inline" >

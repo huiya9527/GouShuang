@@ -3,8 +3,116 @@
     <meta content="text/html;charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="webjars/jquery/2.1.4/jquery.js"></script>
+    <style>
+        .div-inline{display:inline-block}
+    </style>
 </head>
 <body>
-hello welcome to courier main page;
+您好， <span th:text="${courier}"/>
+<h2>待完成订单：</h2>
+    <form th:each="order:${myDeliverOrder}">
+        <div class="div-inline">
+            <input th:value="${order.id}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.customer}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.totalPrice}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.time}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.info}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <button th:inline="text" type="button" th:onclick="'javascript:finishOrder(this,'+${order.id}+');'">确认送达</button>
+        </div>
+    </form>
+<h2>未被领取的订单：</h2>
+    <form th:each="order:${freeToCarryOrder}">
+        <div class="div-inline">
+            <input name="id" th:value="${order.id}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.customer}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.totalPrice}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.time}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.info}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <button th:inline="text" type="button" th:onclick="'javascript:acceptOrder(this,'+${order.id}+');'">接受订单</button>
+        </div>
+    </form>
+<h2>已完成的订单：</h2>
+    <form th:each="order:${myFinisheOrder}">
+        <div class="div-inline">
+            <input th:value="${order.id}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.customer}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.totalPrice}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.time}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input th:value="${order.info}" readonly="readonly"/>
+        </div>
+    </form>
+    <script th:inline="javascript">
+        function acceptOrder(obj, id){
+            var courier = [[${courier}]];
+            /*<![CDATA[*/
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/acceptorder',
+                data: {
+                    'courier': courier,
+                    'id': id
+                },
+                success: function(response){
+                    if(response == "success") {
+                        obj.innerHTML="已领取";
+                        obj.disabled="disabled";
+                    } else {
+                        alert('领取订单失败，可能已经被其他快递员领取！');
+                    }
+                }
+            });
+            /*]]>*/
+        }
+
+        function finishOrder(obj, id){
+            var id = id;
+            /*<![CDATA[*/
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/finishorder',
+                data: {
+                    'id': id
+                },
+                success: function(response){
+                    if(response == "success") {
+                        obj.innerHTML="已确认送达";
+                        obj.disabled="disabled";
+                    } else {
+                        alert('确认失败，如有问题请联系客服');
+                    }
+                }
+            });
+            /*]]>*/
+        }
+    </script>
 </body>
 </html>
