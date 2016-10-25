@@ -11,7 +11,11 @@
     <script src="webjars/jquery/2.1.4/jquery.js"></script>
 </head>
 <body>
-<p>Welcome <span th:text="${user.name}"/></p>
+<p>您好， <span th:text="${user.name}"/></p>
+<form th:action="@{/customerexistorder}" method="post">
+    <input type="hidden" name="username" th:value="${user.name}"/>
+<button type="submit">管理我的订单</button>
+</form>
 <div>
     <form name="order" th:action="@{/order}" method="post" >
         <input type="hidden" th:value="${user.name}" name="username" readonly="readonly" />
@@ -79,21 +83,6 @@
         </div>
     </form>
 </div>
-<div>
-    <p>all orders</p>
-    <div th:each="systemOrder:${systemOrderList}" class="div-width">
-        <form th:action="@{/existorder}">
-            <div class="div-inline"> <input th:value="${systemOrder.id}" readonly="readonly" class="input-width"/></div>
-            <div class="div-inline"> <input th:value="${systemOrder.courier}" readonly="readonly" class="input-width"/></div>
-            <div class="div-inline"> <input th:value="${systemOrder.totalPrice}" readonly="readonly" class="input-width"/></div>
-            <div class="div-inline"> <input th:value="${systemOrder.state}" readonly="readonly" class="input-width"/></div>
-            <div class="div-inline"> <input th:value="${systemOrder.time}" readonly="readonly" class="input-width"/></div>
-            <div class="div-inline"> <input th:value="${systemOrder.info}" readonly="readonly" class="input-width"/></div>
-            <div class="div-line"><input type="button" value="pay" class="input-width"/></div>
-        </form>
-    </div>
-</div>
-
 <script type="text/javascript" th:inline="javascript">
     function checkValue(){
         var objs = $("input[name='count']");
@@ -112,6 +101,10 @@
         }
         /*]]>*/
         return false;
+    }
+
+    function findMyOrder(){
+
     }
 </script>
 </body>

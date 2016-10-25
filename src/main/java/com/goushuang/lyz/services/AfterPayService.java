@@ -21,16 +21,11 @@ public class AfterPayService {
     @Autowired
     private BookMapper bookMapper;
 
-    @Autowired
-    private SystemOrderMapper systemOrderMapper;
-
     public String afterPay(Model model, String username){
         List<Book> books = bookMapper.findAllBooks();
         Customer customer = customerMapper.findByName(username);
-        List<SystemOrder> systemOrderList = systemOrderMapper.selectOrderByCustomer(username);
         model.addAttribute("user", customer);
         model.addAttribute("books", books);
-        model.addAttribute("systemOrderList", systemOrderList);
         return "customer";
     }
 }

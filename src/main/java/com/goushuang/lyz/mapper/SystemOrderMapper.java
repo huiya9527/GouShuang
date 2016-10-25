@@ -21,7 +21,7 @@ public interface SystemOrderMapper {
     @Update(("update systemorder set state = #{state}, courier = #{courier} where id = #{id}"))
     void updateStateAndCourierById(@Param("state")String state, @Param("courier")String courier, @Param("id")int id);
 
-    @Select("select id, customer, courier, totalPrice, state, time, info from systemorder where customer = #{customer} and state = #{state")
+    @Select("select id, customer, courier, totalPrice, state, time, info from systemorder where customer = #{customer} and state = #{state}")
     List<SystemOrder> selectOrderByCustomerAndState(@Param("customer")String customer, @Param("state")String state);
 
     @Select("select id, customer, courier, totalPrice, state, time, info from systemorder where courier = #{courier} and state= #{state}" )
@@ -29,6 +29,9 @@ public interface SystemOrderMapper {
 
     @Select("select id, customer, courier, totalPrice, state, time, info from systemorder where courier is null and state = 'paid'")
     List<SystemOrder> selectOrderCourierIsNullAndStateIsPaid();
+
+    @Select("select id, customer, courier, totalPrice, state, time, info from systemorder where id = #{id}")
+    SystemOrder selectOrderById(@Param("id")int id);
 
 
 }

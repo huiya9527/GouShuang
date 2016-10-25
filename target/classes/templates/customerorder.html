@@ -1,0 +1,130 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="webjars/jquery/2.1.4/jquery.js"></script>
+    <style>
+        .div-inline{display:inline-block}
+    </style>
+</head>
+<body>
+<h1>您好：<span th:text="${username}"></span></h1>
+
+<h2>您目前正在配送的订单如下：</h2>
+<form th:each="order:${orderDeliver}">
+    <div class="div-inline">
+        <input th:value="${order.id}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.courier}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.totalPrice}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.time}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.info}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <button th:inline="text" type="button" th:onclick="'javascript:finishOrder(this,'+${order.id}+');'">确认送达</button>
+    </div>
+</form>
+
+<h2>您的待付款订单如下：</h2>
+
+    <form  th:each="systemOrder:${orderNotPay}" method="post" th:action="@{/paying}" >
+        <input name="customer" type="hidden" th:value="${systemOrder.customer}"/>
+        <div class="div-inline">
+            <input name="id" th:value="${systemOrder.id}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input name="totalPrice" th:value="${systemOrder.totalPrice}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input name="time" th:value="${systemOrder.time}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <input name="info" th:value="${systemOrder.info}" readonly="readonly"/>
+        </div>
+        <div class="div-inline">
+            <button type="submit">确认付款</button>
+        </div>
+    </form>
+
+
+<h2>您代配送订单如下：</h2>
+<form th:each="order:${orderPaid}">
+    <div class="div-inline">
+        <input th:value="${order.id}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.totalPrice}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.time}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.info}" readonly="readonly"/>
+    </div>
+</form>
+
+<h2>您已经完成的订单如下：</h2>
+<form th:each="order:${orderFinished}">
+    <div class="div-inline">
+        <input th:value="${order.id}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.courier}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.totalPrice}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.time}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.info}" readonly="readonly"/>
+    </div>
+</form>
+<h2>您已经取消的订单如下：</h2>
+<form th:each="order:${orderCancelled}">
+    <div class="div-inline">
+        <input th:value="${order.id}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.totalPrice}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.time}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${order.info}" readonly="readonly"/>
+    </div>
+</form>
+<script th:inline="javascript">
+    function finishOrder(obj, id){
+        var id = id;
+        /*<![CDATA[*/
+        $.ajax({
+            type: 'POST',
+            url: '/ajax/payOrder',
+            data: {
+                'id': id
+            },
+            success: function(response){
+                if(response == "success") {
+                    obj.innerHTML="已确认收货";
+                    obj.disabled="disabled";
+                } else {
+                    alert('确认收货失败');
+                }
+            }
+        });
+        /*]]>*/
+    }
+</script>
+</body>
+</html>
