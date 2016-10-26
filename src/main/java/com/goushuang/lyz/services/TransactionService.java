@@ -68,4 +68,15 @@ public class TransactionService {
         systemOrderMapper.updateStateAndCourierById(OrderState.deliver.getDescription(), courier, id);
         return true;
     }
+
+    public boolean finishOrder(int id) throws RuntimeException{
+        SystemOrder systemOrder = systemOrderMapper.selectOrderById(id);
+        if(!systemOrder.getState().equals(OrderState.deliver.getDescription())) {
+            return false;
+        }
+        systemOrderMapper.updateStateById(OrderState.finished.getDescription(),id);
+        return true;
+    }
+
+
 }

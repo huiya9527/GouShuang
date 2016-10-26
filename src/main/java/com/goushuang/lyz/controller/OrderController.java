@@ -8,6 +8,7 @@ import com.goushuang.lyz.mapper.CustomerMapper;
 import com.goushuang.lyz.mapper.SystemOrderMapper;
 import com.goushuang.lyz.services.TransactionService;
 import com.goushuang.lyz.viewObject.OrderState;
+import net.spy.memcached.MemcachedClient;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,13 +33,15 @@ public class OrderController {
     @Autowired
     TransactionService transactionService;
 
+    @Autowired
+    MemcachedClient memcachedClient;
+
     /***
      * 订单提交
      * @return 确认付款
      */
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String order(Model model, String username, String[] bookname, int[] count, float[] price){
-        // TODO: 2016/9/27 解耦，通过context获取
         SystemOrder systemOrder = new SystemOrder();
         // 追加orderInfo信息，表示订单详情
         for(int i = 0; i < bookname.length; i++){
@@ -57,18 +60,27 @@ public class OrderController {
     }
 
     /***
-     * 确认付款
+     * 查看订单详情
+     * @return 确认付款
+     */
+    @RequestMapping(value = "/order2", method = RequestMethod.POST)
+    public String order(Model model, @ModelAttribute("systemOrder")SystemOrder systemOrder){
+        Customer customer = customerMapper.findByName(systemOrder.getCustomer());
+        model.addAttribute("systemOrder", systemOrder);
+        model.addAttribute("customer",customer);
+        return "payorder";
+    }
+
+    /***
+     * 确认付款（用于下单后立刻付款的情况）
      * @return 付款成功
      */
     @RequestMapping(value="/paying", method= RequestMethod.POST)
-    public String payOrder(@ModelAttribute("systemOrder")SystemOrder systemOrder, Model model, HttpServletRequest httpServletRequest){
-        if(systemOrder == null) {  //已经存在的订单确认付款
-            systemOrder = new SystemOrder();
-            systemOrder.setCustomer((String) httpServletRequest.getAttribute("customer"));
-            systemOrder.setId((int) httpServletRequest.getAttribute("id"));
-            systemOrder.setTotalPrice((float) httpServletRequest.getAttribute("totalPrice"));
-            systemOrder.setTime((String) httpServletRequest.getAttribute("time"));
-            systemOrder.setInfo((String) httpServletRequest.getAttribute("info"));
+    public String payOrder(@ModelAttribute("systemOrder")SystemOrder systemOrder, @ModelAttribute("smscode")int smscode, Model model){
+        String msg = systemOrder.getCustomer() + "_" + systemOrder.getId();
+        if(memcachedClient.get(msg)==null || (int)memcachedClient.get(msg) != smscode){
+            model.addAttribute("errorMessage","验证码错误或已过期");
+            return "payerror";
         }
         try{
             if(transactionService.payForOrder(systemOrder,model)){
@@ -80,10 +92,8 @@ public class OrderController {
         return "payerror";
     }
 
-
     @RequestMapping(value = "/customerexistorder", method = RequestMethod.POST)
     public String existOrder(Model model, String username) {
-        System.out.println(username);
         List<SystemOrder> orderNotPay = systemOrderMapper.selectOrderByCustomerAndState(username, OrderState.notPay.getDescription());
         List<SystemOrder> orderPaid = systemOrderMapper.selectOrderByCustomerAndState(username, OrderState.paid.getDescription());
         List<SystemOrder> orderDeliver = systemOrderMapper.selectOrderByCustomerAndState(username, OrderState.deliver.getDescription());

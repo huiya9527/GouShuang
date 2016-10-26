@@ -12,30 +12,29 @@
 <h1>您好：<span th:text="${username}"></span></h1>
 
 <h2>您目前正在配送的订单如下：</h2>
-<form th:each="order:${orderDeliver}">
+<form th:each="deliver:${orderDeliver}">
     <div class="div-inline">
-        <input th:value="${order.id}" readonly="readonly"/>
+        <input th:value="${deliver.id}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.courier}" readonly="readonly"/>
+        <input th:value="${deliver.courier}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.totalPrice}" readonly="readonly"/>
+        <input th:value="${deliver.totalPrice}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.time}" readonly="readonly"/>
+        <input th:value="${deliver.time}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.info}" readonly="readonly"/>
+        <input th:value="${deliver.info}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <button th:inline="text" type="button" th:onclick="'javascript:finishOrder(this,'+${order.id}+');'">确认送达</button>
+        <button th:inline="text" type="button" th:onclick="'javascript:finishOrder(this,'+${deliver.id}+');'">确认送达</button>
     </div>
 </form>
 
 <h2>您的待付款订单如下：</h2>
-
-    <form  th:each="systemOrder:${orderNotPay}" method="post" th:action="@{/paying}" >
+    <form  th:each="systemOrder:${orderNotPay}" th:action="@{/order2}" method="post" >
         <input name="customer" type="hidden" th:value="${systemOrder.customer}"/>
         <div class="div-inline">
             <input name="id" th:value="${systemOrder.id}" readonly="readonly"/>
@@ -51,27 +50,22 @@
         </div>
         <div class="div-inline">
             <button type="submit">确认付款</button>
-        </div>
-        <div class="div-inline">
-            <button th:inline="text" type="button" th:onclick="'javascript:finishOrder(this,'+${order.id}+');'">确认送达</button>
             <button type="button">取消订单</button>
         </div>
     </form>
-
-
 <h2>您代配送订单如下：</h2>
-<form th:each="order:${orderPaid}">
+<form th:each="paid:${orderPaid}">
     <div class="div-inline">
-        <input th:value="${order.id}" readonly="readonly"/>
+        <input th:value="${paid.id}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.totalPrice}" readonly="readonly"/>
+        <input th:value="${paid.totalPrice}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.time}" readonly="readonly"/>
+        <input th:value="${paid.time}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.info}" readonly="readonly"/>
+        <input th:value="${paid.info}" readonly="readonly"/>
     </div>
     <div class="div-inline">
         <button type="button" >取消订单</button>
@@ -79,36 +73,39 @@
 </form>
 
 <h2>您已经完成的订单如下：</h2>
-<form th:each="order:${orderFinished}">
+<form th:each="finish:${orderFinished}">
     <div class="div-inline">
-        <input th:value="${order.id}" readonly="readonly"/>
+        <input th:value="${finish.id}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.courier}" readonly="readonly"/>
+        <input th:value="${finish.courier}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.totalPrice}" readonly="readonly"/>
+        <input th:value="${finish.totalPrice}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.time}" readonly="readonly"/>
+        <input th:value="${finish.time}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.info}" readonly="readonly"/>
+        <input th:value="${finish.info}" readonly="readonly"/>
     </div>
 </form>
 <h2>您已经取消的订单如下：</h2>
-<form th:each="order:${orderCancelled}">
+<form th:each="cancelled:${orderCancelled}">
     <div class="div-inline">
-        <input th:value="${order.id}" readonly="readonly"/>
+        <input th:value="${cancelled.id}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.totalPrice}" readonly="readonly"/>
+        <input th:value="${cancelled.courier}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.time}" readonly="readonly"/>
+        <input th:value="${cancelled.totalPrice}" readonly="readonly"/>
     </div>
     <div class="div-inline">
-        <input th:value="${order.info}" readonly="readonly"/>
+        <input th:value="${cancelled.time}" readonly="readonly"/>
+    </div>
+    <div class="div-inline">
+        <input th:value="${cancelled.info}" readonly="readonly"/>
     </div>
 </form>
 <script th:inline="javascript">
@@ -124,7 +121,7 @@
             success: function(response){
                 if(response == "success") {
                     obj.innerHTML="已确认收货";
-                    obj.disabled="disabled";
+                    obj.disabled= true;
                 } else {
                     alert('确认收货失败');
                 }

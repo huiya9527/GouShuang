@@ -23,6 +23,4 @@ public interface BookMapper {
 
     @Update("update book set num = #{num} where name = #{name}")
     void updateBookNumByName(@Param("num")int num, @Param("name")String name);
-
-
 }

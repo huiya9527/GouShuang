@@ -36,12 +36,10 @@ public class LoginService {
             Customer customer = customerMapper.findByName(loginMessage.getUsername());
             if(customer == null) {
                 model.addAttribute("errorMessage", new LoginError("username does not exist!"));
-                System.out.println("username does not exist!");
                 return "loginerror";
             }
             if(!EncodeBySHA.encodebySHA(loginMessage.getPassword()).equals(customer.getPassword())){
                 model.addAttribute("errorMessage", new LoginError("wrong password!"));
-                System.out.println("wrong password!");
                 return "loginerror";
             }
             List<Book> books = bookMapper.findAllBooks();
@@ -52,12 +50,10 @@ public class LoginService {
             Courier courier = courierMapper.findByName(loginMessage.getUsername());
             if(courier == null){
                 model.addAttribute("errorMessage", new LoginError("username does not exist!"));
-                System.out.println("username does not exist!");
                 return "loginerror";
             }
             if(!EncodeBySHA.encodebySHA(loginMessage.getPassword()).equals(courier.getPassword())){
                 model.addAttribute("errorMessage", new LoginError("wrong password!"));
-                System.out.println("wrong password!");
                 return "loginerror";
             }
             List<SystemOrder> myDeliverOrder = systemOrderMapper.selectOrderByCourierAndState(loginMessage.getUsername(), OrderState.deliver.getDescription());
@@ -72,12 +68,10 @@ public class LoginService {
             Administrator administrator = administratorMapper.findByName(loginMessage.getUsername());
             if(administrator == null){
                 model.addAttribute("errorMessage", new LoginError("username does not exist!"));
-                System.out.println("username does not exist!");
                 return "loginerror";
             }
             if(!EncodeBySHA.encodebySHA(loginMessage.getPassword()).equals(administrator.getPassword())){
                 model.addAttribute("errorMessage", new LoginError("wrong password!"));
-                System.out.println("wrong password!");
                 return "loginerror";
             }
             return "administrator";
