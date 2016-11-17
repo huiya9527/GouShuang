@@ -3,9 +3,10 @@
     <meta content="text/html;charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="css/login.css"/>
+    <script src="webjars/jquery/2.1.4/jquery.js"></script>
 </head>
 <body>
-    <div class="page-container">
+    <div id="login" class="page-container">
         <h2>请登录：</h2>
         <form th:action="@{/whichlog}"  th:object="${loginMessage}" method="post">
             <input type="text"  th:field = "*{username}" class="username" placeholder="请输入您的用户名！"/>
@@ -20,6 +21,48 @@
             </div>
             <button type="submit" value="登录">登录</button>
         </form>
+        <button type="button" onclick="jump()">注册</button>
     </div>
+    <div id="register" style="display:none" class="page-container" >
+        <h2>请填写注册用户信息：</h2>
+        <form name="order" th:action="@{/register}" method="post">
+            <input type="text" name="username" placeholder="请输入您的用户名！"/>
+            <input type="password" name="password" placeholder="请输入您的用户密码！"/>
+            <input type="password" name="password_again" placeholder="请再次输入您的用户密码"/>
+            <div>
+                <span >请选择用户类型：</span>
+                <select name="usertype">
+                    <option value="customer" selected="selected">用户</option>
+                    <option value="courier">快递员</option>
+                    <option value="administrator">管理员</option>
+                </select>
+            </div>
+            <button type="button" onclick="registor()">确定</button>
+        </form>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+        function jump(){
+            console.log("here");
+            $('#login').hide();
+            $('#register').show();
+        }
+
+        function registor(){
+            /*<![CDATA[*/
+            var username = $("username").val;
+            var password = $("password").val;
+            var password_again = $("password_again").val;
+            if(username.length == 0 || password.length == 0 || password_again == 0) {
+                alert("请确保信息填写完整！");
+                return;
+            }
+            if(password != password_again) {
+                alert("请确保两次密码输入一致！");
+                return;
+            }
+            document.order.submit();
+            /*]]>*/
+        }
+    </script>
 </body>
 </html>

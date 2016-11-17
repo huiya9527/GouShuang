@@ -1,10 +1,7 @@
 package com.goushuang.lyz.mapper;
 
 import com.goushuang.lyz.dao.Customer;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 
@@ -16,4 +13,7 @@ public interface CustomerMapper {
 
     @Update("update customer set reserve = #{reverse} where name = #{name}")
     void updateReverseByName(@Param("reverse")float reverse, @Param("name")String name);
+
+    @Insert("insert into customer (name, password, info) values (#{name}, #{password}, #{info}) ")
+    void addCustomer(@Param("name")String name, @Param("password")String password, @Param("info")String info);
 }

@@ -11,6 +11,8 @@ public class EncodeBySHA {
             sha.update(srcBytes);
             // 完成哈希计算，得到result
             byte[] resultBytes = sha.digest();
+            System.out.println("编码后长度");
+            System.out.println(resultBytes.length);
             return new String(resultBytes);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

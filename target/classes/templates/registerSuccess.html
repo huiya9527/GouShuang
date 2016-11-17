@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="webjars/jquery/2.1.4/jquery.js"></script>
+</head>
+<body>
+<div>
+    <p>注册成功，<span id="jumpTo">5</span> 秒后自动返回。</p>
+    <script type="text/javascript" th:inline="javascript">
+        function countDown(secs){
+            var jumpTo = document.getElementById("jumpTo");
+            jumpTo.innerText = secs;
+            console.log(secs);
+            /*<![CDATA[*/
+            if(--secs>0){
+                setTimeout("countDown("+secs+")",1000);
+            }
+            else{
+                window.location.href='localhost:8080';
+            }
+            /*]]>*/
+        }
+        countDown(5);
+    </script>
+</div>
+</body>
+</html>

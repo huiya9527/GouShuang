@@ -1,15 +1,12 @@
 package com.goushuang.lyz.controller;
 
-import com.goushuang.lyz.dao.Book;
 import com.goushuang.lyz.dao.Customer;
 import com.goushuang.lyz.dao.SystemOrder;
-import com.goushuang.lyz.mapper.BookMapper;
 import com.goushuang.lyz.mapper.CustomerMapper;
 import com.goushuang.lyz.mapper.SystemOrderMapper;
 import com.goushuang.lyz.services.TransactionService;
 import com.goushuang.lyz.viewObject.OrderState;
 import net.spy.memcached.MemcachedClient;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
